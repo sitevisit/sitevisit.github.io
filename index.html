@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Site</title>
+    <style>
+        #hd{
+            text-align: center;
+            color: white;
+            border: 2px solid green;
+            border-radius: 15px;
+            padding: 25px 10px;
+            margin: auto;
+            margin-top: 10px;
+            background-color: grey;
+        }
+        body{
+            background:linear-gradient(180deg,lightblue,rgb(227, 184, 128));
+            color:blue;
+            margin: 2px 20%;
+        }
+        #p1{
+            border:2px solid grey;
+            padding:10px;
+            border-radius: 12px;
+            background:linear-gradient(90deg,rgb(157, 255, 0),rgb(5, 248, 5));
+        }
+        #p2{
+            border: 2px solid #76866c;
+            border-radius: 15px;
+            padding: 20px;
+            background:linear-gradient(90deg,rgb(251, 160, 104),rgb(74, 235, 146));
+        }
+        .a1{
+            text-decoration:none;
+            font-weight: 1000;
+            color:black;
+            padding: 5px;
+            border: 1px solid grey;
+            border-radius: 10px;
+        }
+        #btn1{
+            background:linear-gradient(90deg,rgb(14, 60, 210),rgb(223, 1, 145));
+            border: 1px solid black;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .center{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <h1 id="hd">HELLO EVERYONE!</h1><br>
+    <P id="p1">This is my <b>main website</b>. you can check my other websites....</P><br>
+    <h3 style="text-align: center;">CLICK ON BELOW LINKS</h3>
+    <ol>
+        <li><a href="https://visitwebsite.github.io/SBbricks" target="_blank" class="a1">Bricks Business</a></li><br>
+        <li><a href="https://visitwebsite.github.io/shortfilms" target="_blank" class="a1">ShortFilms</a></li>
+    </ol>
+    <br>
+    <p id="p2">these are simple websites. which costs less than normal and also i am beginner. Trying to build big projects and learn more with earnings.</p><br><br>
+    <div class="center">
+    <input type="button" onclick="opWh()" value="contact on whatsapp" id="btn1">
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        let color=["red","black","blue"];
+        let i=0;
+        function changeClr(){
+            let hd=document.getElementById("hd");
+            hd.style.backgroundColor=color[i];
+            i++;
+            if(i===color.length){
+                i=0;
+            }
+        }
+        function opWh(){
+            const whatsappMsg=`hi vinay!, i am interested in your website development, can i talk to you`;
+            const whatsappNumber="9448034814";
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+            window.open(whatsappURL,"_blank");
+        }
+        setInterval(changeClr,2500);
+    </script>
+</body>
+</html>
