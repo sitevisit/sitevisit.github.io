@@ -51,6 +51,70 @@
         .center{
             text-align: center;
         }
+        #game{
+    width:360px;
+    height:640px;
+    margin:auto;
+    position:relative;
+    overflow:hidden;
+    border:3px solid #000;
+    touch-action:none;
+}
+
+#bird{
+    width:35px;
+    height:35px;
+    background:yellow;
+    border-radius:50%;
+    position:absolute;
+    left:80px;
+    top:250px;
+}
+
+.pipe{
+    position:absolute;
+    width:60px;
+    background:green;
+}
+
+#score{
+    position:absolute;
+    top:10px;
+    left:10px;
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+    z-index:5;
+}
+
+#highScore{
+    position:absolute;
+    top:40px;
+    left:10px;
+    color:white;
+    font-size:18px;
+    z-index:5;
+}
+
+#startBtn{
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:20;
+}
+
+#gameOver{
+    position:absolute;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:rgba(0,0,0,.5);
+    color:white;
+    z-index:30;
+                                       }
     </style>
 </head>
 <body>
@@ -67,6 +131,19 @@
     <p id="p2">these are simple websites. which costs less than normal and also i am beginner. Trying to build big projects and learn more with earnings.</p><br><br>
     <div class="center">
     <input type="button" onclick="opWh()" value="contact on whatsapp" id="btn1">
+    </div>
+    <div id="game">
+    <div id="bird"></div>
+
+    <div id="score">0</div>
+    <div id="highScore">High: 0</div>
+
+    <button id="startBtn">START</button>
+
+    <div id="gameOver">
+        <h2>Game Over</h2>
+        <button id="restartBtn">Restart</button>
+    </div>
     </div>
     <br>
     <br>
@@ -95,6 +172,102 @@
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMsg)}`;
             window.open(whatsappURL,"_blank");
         }
+        const game=document.getElementById("game");
+const bird=document.getElementById("bird");
+const scoreEl=document.getElementById("score");
+const highEl=document.getElementById("highScore");
+const startBtn=document.getElementById("startBtn");
+const over=document.getElementById("gameOver");
+const restartBtn=document.getElementById("restartBtn");
+let birdY=250,vel=0,gravity=0.45,flap=-7;
+let running=false,score=0;
+let pipes=[],frame=0;
+let high=+localStorage.getItem("flappyHigh")||0;
+highEl.textContent="High: "+high;
+function reset(){
+pipes.forEach(p=>{p.top.remove();p.bottom.remove();});
+pipes=[];
+birdY=250;vel=0;score=0;frame=0;
+bird.style.top=birdY+"px";
+scoreEl.textContent=0;
+over.style.display="none";
+}
+function spawnPipe(){
+const gap=170;
+const topH=Math.floor(Math.random()*300)+60;
+const bottomY=topH+gap;
+const bottomH=640-bottomY;
+const t=document.createElement("div");
+t.className="pipe";
+t.style.height=topH+"px";
+t.style.left="360px";
+t.style.top="0";
+const b=document.createElement("div");
+b.className="pipe";
+b.style.height=bottomH+"px";
+b.style.left="360px";
+b.style.bottom="0";
+game.appendChild(t);
+game.appendChild(b);
+pipes.push({x:360,top:t,bottom:b,passed:false});
+}
+function rectHit(a,b){
+return !(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom);
+}
+function endGame(){
+running=false;
+if(score>high){
+high=score;
+localStorage.setItem("flappyHigh",high);
+highEl.textContent="High: "+high;
+}
+over.style.display="flex";
+startBtn.style.display="block";
+}
+function loop(){
+if(!running)return;
+requestAnimationFrame(loop);
+frame++;
+vel+=gravity;
+birdY+=vel;
+bird.style.top=birdY+"px";
+if(frame%110===0)spawnPipe();
+const birdRect=bird.getBoundingClientRect();
+for(let i=pipes.length-1;i>=0;i--){
+const p=pipes[i];
+p.x-=2.5;
+p.top.style.left=p.x+"px";
+p.bottom.style.left=p.x+"px";
+if(!p.passed&&p.x+60<80){
+p.passed=true;
+score++;
+scoreEl.textContent=score;
+}
+if(p.x<-60){
+p.top.remove();
+p.bottom.remove();
+  pipes.splice(i,1);
+continue;
+}
+if(rectHit(birdRect,p.top.getBoundingClientRect())||
+rectHit(birdRect,p.bottom.getBoundingClientRect())){
+endGame();
+return;
+}
+}
+if(birdY<0||birdY>605)endGame();
+}
+function start(){
+reset();
+running=true;
+startBtn.style.display="none";
+requestAnimationFrame(loop);
+}
+startBtn.onclick=start;
+restartBtn.onclick=start;
+game.addEventListener("pointerdown",()=>{
+if(running)vel=flap;
+});
         setInterval(changeClr,2500);
     </script>
 </body>
