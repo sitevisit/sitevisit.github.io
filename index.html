@@ -64,13 +64,13 @@
 }
 
 #bird{
-    width:35px;
-    height:35px;
+    width:25px;
+    height:25px;
     background:yellow;
     border-radius:50%;
     position:absolute;
-    left:80px;
-    top:250px;
+    left:50px;
+    top:140px;
 }
 
 .pipe{
@@ -199,36 +199,39 @@ bird.style.top=birdY+"px";
 scoreEl.textContent=0;
 over.style.display="none";
 }
-function spawnPipe(){
-    const gameHeight = 340;
-    const gap = 97;
+function spawnPipe() {
+    const gap = 80;      // Gap between pipes
+    const pipeWidth = 45;
 
-    const topH = Math.floor(Math.random() * 120) + 40;
-    const bottomY = topH + gap;
-    const bottomH = gameHeight - bottomY;
+    // Top pipe height between 30 and 120
+    const topHeight = Math.floor(Math.random() * 90) + 30;
 
-    const t = document.createElement("div");
-    t.className = "pipe";
-    t.style.height = topH + "px";
-    t.style.left = "300px";
-    t.style.top = "0";
+    const bottomHeight = 340 - topHeight - gap;
 
-    const b = document.createElement("div");
-    b.className = "pipe";
-    b.style.height = bottomH + "px";
-    b.style.left = "300px";
-    b.style.bottom = "0";
+    const top = document.createElement("div");
+    top.className = "pipe";
+    top.style.width = pipeWidth + "px";
+    top.style.height = topHeight + "px";
+    top.style.left = "300px";
+    top.style.top = "0";
 
-    game.appendChild(t);
-    game.appendChild(b);
+    const bottom = document.createElement("div");
+    bottom.className = "pipe";
+    bottom.style.width = pipeWidth + "px";
+    bottom.style.height = bottomHeight + "px";
+    bottom.style.left = "300px";
+    bottom.style.bottom = "0";
+
+    game.appendChild(top);
+    game.appendChild(bottom);
 
     pipes.push({
-        x:300,
-        top:t,
-        bottom:b,
-        passed:false
+        x: 300,
+        top: top,
+        bottom: bottom,
+        passed: false
     });
-}
+        }
 function rectHit(a,b){
 return !(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom);
 }
