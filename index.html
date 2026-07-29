@@ -129,10 +129,15 @@
     <ol>
         <li><a href="https://visitwebsite.github.io/SBbricks" target="_blank" class="a1">Bricks Business</a></li><br>
         <li><a href="https://visitwebsite.github.io/shortfilms" target="_blank" class="a1">ShortFilms</a></li><br>
-        <li><a href="https://github.com/sitevisit" class="a1">profile</a></li>
     </ol>
     <br>
-    <p id="p2">these are simple websites. which costs less than normal and also i am beginner. Trying to build big projects and learn more with earnings.</p><br><br>
+        <p>Click on the Profile to view my github profile.</p>
+        <ul>
+            <li><a href="https://github.com/sitevisit" class="a1">profile</a></li>
+        </ul>
+        <br>
+    <p id="p2">these are simple websites built by me, some for business purpose and some for my leaning purpose. which costs less than normal. Trying to build big projects and learn more with earnings. if you are interested click on the contact button
+</p><br><br>
     <div class="center">
     <input type="button" onclick="opWh()" value="contact on whatsapp" id="btn1">
     </div>
@@ -186,7 +191,7 @@ const highEl=document.getElementById("highScore");
 const startBtn=document.getElementById("startBtn");
 const over=document.getElementById("gameOver");
 const restartBtn=document.getElementById("restartBtn");
-let birdY=100,vel=0,gravity=0.35,flap=-6;
+let birdY=120,vel=0,gravity=0.35,flap=-6;
 let running=false,score=0;
 let pipes=[],frame=0;
 let high=+localStorage.getItem("flappyHigh")||0;
@@ -194,7 +199,7 @@ highEl.textContent="High: "+high;
 function reset(){
 pipes.forEach(p=>{p.top.remove();p.bottom.remove();});
 pipes=[];
-birdY=100;vel=0;score=0;frame=0;
+birdY=120;vel=0;score=0;frame=0;
 bird.style.top=birdY+"px";
 scoreEl.textContent=0;
 over.style.display="none";
